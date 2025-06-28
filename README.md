@@ -240,6 +240,7 @@ ORDER BY JourneyID
 | 5 | 91 | 10 | 11/02/2023 | HOMEPAGE | Click | 156 |
 
   ## 2- Data cleaning using python :
+  ### 1- correct gender :
   After cleaning the data using SQL, I observed discrepancies in customer names and their corresponding genders (e.g., 'Emma Anderson' listed as 'Male', or 'Robert Hernandez' as 'Female'). To address these inconsistencies, I utilized Python, specifically employing the `gender_guesser library`, to correct the gender entries and modify the customer + geography merged table."
   #### the python script :
   ```python
@@ -287,6 +288,102 @@ def correct_gender(row: pd.DataFrame):
 | 3 | Robert Hernandez | robert.hernandez@example.com | Male | 26 | Netherlands | Amsterdam |
 | 4 | David Garcia | david.garcia@example.com | Male | 25 | Sweden | Stockholm |
 | 5 | Emma Miller | emma.miller@example.com | Female | 41 | Spain | Madrid |
+
+### 2- Sentiment analysis :
+The customer review table includes a 'ReviewText' column with string data and a 'Rating' column with integer data. To derive insights from these two fields, I chose to conduct a sentiment analysis, implemented as follows :
+### The python script : 
+```python
+# pip install pandas nltk 
+import pandas as pd
+import nltk
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+
+# Download the VADER lexicon for sentiment analysis if not already present.
+nltk.download('vader_lexicon')
+
+# Get data from the csv file
+pd.DataFrame = pd.read_csv(r"C:\Users\Home\Desktop\NTI-final-project\fact_customer_reviews.csv")
+customer_reviews_df = pd.DataFrame 
+
+# Initialize the VADER sentiment intensity analyzer for analyzing the sentiment of text data
+sia = SentimentIntensityAnalyzer()
+
+# Define a function to calculate sentiment scores using VADER
+def calculate_sentiment(review):
+    # Get the sentiment scores for the review text
+    sentiment = sia.polarity_scores(review)
+    # Return the compound score, which is a normalized score between -1 (most negative) and 1 (most positive)
+    return sentiment['compound']
+
+# Define a function to categorize sentiment using both the sentiment score and the review rating
+def categorize_sentiment(score, rating):
+    # Use both the text sentiment score and the numerical rating to determine sentiment category
+    if score > 0.05:  # Positive sentiment score
+        if rating >= 4:
+            return 'Positive'  # High rating and positive sentiment
+        elif rating == 3:
+            return 'Mixed Positive'  # Neutral rating but positive sentiment
+        else:
+            return 'Mixed Negative'  # Low rating but positive sentiment
+    elif score < -0.05:  # Negative sentiment score
+        if rating <= 2:
+            return 'Negative'  # Low rating and negative sentiment
+        elif rating == 3:
+            return 'Mixed Negative'  # Neutral rating but negative sentiment
+        else:
+            return 'Mixed Positive'  # High rating but negative sentiment
+    else:  # Neutral sentiment score
+        if rating >= 4:
+            return 'Positive'  # High rating with neutral sentiment
+        elif rating <= 2:
+            return 'Negative'  # Low rating with neutral sentiment
+        else:
+            return 'Neutral'  # Neutral rating and neutral sentiment
+
+# Define a function to bucket sentiment scores into text ranges
+def sentiment_bucket(score):
+    if score >= 0.5:
+        return '0.5 to 1.0'  # Strongly positive sentiment
+    elif 0.0 <= score < 0.5:
+        return '0.0 to 0.49'  # Mildly positive sentiment
+    elif -0.5 <= score < 0.0:
+        return '-0.49 to 0.0'  # Mildly negative sentiment
+    else:
+        return '-1.0 to -0.5'  # Strongly negative sentiment
+
+# Apply sentiment analysis to calculate sentiment scores for each review
+customer_reviews_df['SentimentScore'] = customer_reviews_df['ReviewText'].apply(calculate_sentiment)
+
+# Apply sentiment categorization using both text and rating
+customer_reviews_df['SentimentCategory'] = customer_reviews_df.apply(
+    lambda row: categorize_sentiment(row['SentimentScore'], row['Rating']), axis=1)
+
+# Apply sentiment bucketing to categorize scores into defined ranges
+customer_reviews_df['SentimentBucket'] = customer_reviews_df['SentimentScore'].apply(sentiment_bucket)
+
+# Display the first few rows of the DataFrame with sentiment scores, categories, and buckets
+print(customer_reviews_df.head())
+
+# Save the DataFrame with sentiment scores, categories, and buckets to a new CSV file
+customer_reviews_df.to_csv('fact_customer_reviews_with_sentiment.csv', index=False)
+```
+### Table before the script :
+| ReviewID | CustomerID | ProductID | ReviewDate | Rating | ReviewText |
+|---|---|---|---|---|---|
+| 1 | 77 | 18 | 2023-12-23 | 3 | Average experience, nothing special. |
+| 2 | 80 | 19 | 2024-12-25 | 5 | The quality is top-notch. |
+| 3 | 50 | 13 | 2025-01-26 | 4 | Five stars for the quick delivery. |
+| 4 | 78 | 15 | 2025-04-21 | 3 | Good quality, but could be cheaper. |
+| 5 | 64 | 2 | 2023-07-16 | 3 | Average experience, nothing special. |
+### Output of the script : 
+| ReviewID | CustomerID | ProductID | ReviewDate | Rating | ReviewText | SentimentScore | SentimentCategory | SentimentBucket |
+|---|---|---|---|---|---|---|---|---|
+| 1 | 77 | 18 | 12/23/2023 | 3 | Average experience, nothing special. | -0.3089 | Mixed Negative | -0.49 to 0.0 |
+| 2 | 80 | 19 | 12/25/2024 | 5 | The quality is top-notch. | 0 | Positive | 0.0 to 0.49 |
+| 3 | 50 | 13 | 1/26/2025 | 4 | Five stars for the quick delivery. | 0 | Positive | 0.0 to 0.49 |
+| 4 | 78 | 15 | 4/21/2025 | 3 | Good quality, but could be cheaper. | 0.2382 | Mixed Positive | 0.0 to 0.49 |
+| 5 | 64 | 2 | 7/16/2023 | 3 | Average experience, nothing special. | -0.3089 | Mixed Negative | -0.49 to 0.0 |
+
   ## How to Use
 
 
