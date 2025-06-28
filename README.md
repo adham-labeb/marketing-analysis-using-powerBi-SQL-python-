@@ -387,7 +387,7 @@ customer_reviews_df.to_csv('fact_customer_reviews_with_sentiment.csv', index=Fal
 # 2-Data Modeling and Analysis:
     1- The cleaned and transformed data is loaded into Power BI.
     2- Relationships between various data tables are established to create a robust data model, enabling cross-table analysis.
-    https://github.com/adham-labeb/marketing-analysis-using-powerBi-SQL-python-/blob/main/data_model.png
+    ![Alt text for the image](https://github.com/adham-labeb/marketing-analysis-using-powerBi-SQL-python-/blob/main/data_model.png)
     3- Measures and calculated columns are defined to derive key marketing metrics and KPIs (Key Performance Indicators).
 
   ## How to Use
