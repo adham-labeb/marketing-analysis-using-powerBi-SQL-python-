@@ -397,7 +397,48 @@ customer_reviews_df.to_csv('fact_customer_reviews_with_sentiment.csv', index=Fal
 ``` dax
 AVG_Rating = AVERAGE(fact_customer_reviews[Rating])
 ``` 
-
+2- **Clicks** :
+```dax
+clicks = sum(fact_engagement_data[Clicks])
+```
+3- Conversion rate :
+```dax
+Conversion Rate = 
+VAR TotalVisitors = CALCULATE( COUNT (fact_customer_journey[JourneyID]) , fact_customer_journey[Action] = "View" )
+VAR TotalPurchases = CALCULATE(
+    COUNT(fact_customer_journey[JourneyID]),
+    fact_customer_journey[Action] = "Purchase"
+)
+RETURN
+IF(
+    TotalVisitors = 0, 
+    0, 
+    DIVIDE(TotalPurchases, TotalVisitors))
+```
+4- Likes :
+```dax
+Likes = sum (fact_engagement_data[Likes])
+```
+5- Number of campaigns:
+```dax
+Number of Campaigns = DISTINCTCOUNT(fact_engagement_data[CampaignID])
+```
+6- Number of engagements :
+```dax
+Number of Engagements = DISTINCTCOUNT(fact_engagement_data[EngagementID])
+```
+7- Number of journeys :
+```dax
+Number of journeys = DISTINCTCOUNT(fact_customer_journey[JourneyID])
+```
+8- Number of reviews : 
+```dax
+number of reviews = DISTINCTCOUNT(fact_customer_reviews[ReviewID])
+```
+9- views :
+```dax
+Views = SUM ( fact_engagement_data[Views] )
+```
 
   ## How to Use
 
