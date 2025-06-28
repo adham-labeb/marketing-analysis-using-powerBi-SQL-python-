@@ -33,6 +33,7 @@ The primary goal of this project is to create a robust and insightful marketing 
  # project steps
 
 ## 1- data cleaning using SQl
+### 1- the customer and geography table : 
 ```sql
 -- 1- cleaning the customer table and merge it with the geography table ---
 SELECT 
@@ -50,7 +51,7 @@ Left join
 on 
          C.GeographyID = G.GeographyID ;
 ```
-### tables the query : 
+### tables before the query : 
 #### the customer table :
 | CustomerID | CustomerName | Email | Gender | Age | GeographyID |
 |---|---|---|---|---|---|
@@ -69,7 +70,7 @@ on
 | 4 | Spain | Madrid |
 | 5 | Italy | Rome |
 
-### output of the query 
+### output of the query :
 | CustomerID | CustomerName | Email | Gender | Age | Country | City |
 |---|---|---|---|---|---|---|
 | 1 | Emma Anderson | emma.anderson@example.com | Male | 50 | Germany | Berlin |
@@ -78,7 +79,41 @@ on
 | 4 | David Garcia | david.garcia@example.com | Male | 25 | Sweden | Stockholm |
 | 5 | Emma Miller | emma.miller@example.com | Female | 41 | Spain | Madrid |
 
-  
+### 2- the product table
+
+```sql
+-- 2- cleaning the product table ---
+SELECT top 5 * FROM products
+
+SELECT top 5
+       ProductID , 
+	   ProductName , 
+	   Price ,
+CASE  
+	   When Price < 50 THEN 'LOW'
+	   When Price BETWEEN 50 and 200 THEN 'MEDIUM'
+	   ELSE 'HIGH'
+end  AS PriceCategory
+FROM 
+       products
+```
+### table before the query :
+| ProductID | ProductName | Category | Price |
+|---|---|---|---|
+| 1 | Running Shoes | Sports | 223.75 |
+| 2 | Fitness Tracker | Sports | 196.68 |
+| 3 | Yoga Mat | Sports | 485.32 |
+| 4 | Dumbbells | Sports | 26.21 |
+| 5 | Soccer Ball | Sports | 41.26 |
+
+### output of the query :
+| ProductID | ProductName | Price | PriceCategory |
+|---|---|---|---|
+| 1 | Running Shoes | 223.75 | HIGH |
+| 2 | Fitness Tracker | 196.68 | MEDIUM |
+| 3 | Yoga Mat | 485.32 | HIGH |
+| 4 | Dumbbells | 26.21 | LOW |
+| 5 | Soccer Ball | 41.26 | LOW |
   ## How to Use
 
 
