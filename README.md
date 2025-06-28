@@ -50,7 +50,7 @@ Left join
 on 
          C.GeographyID = G.GeographyID ;
 ```
-### output before the query : 
+### tables the query : 
 #### the customer table :
 | CustomerID | CustomerName | Email | Gender | Age | GeographyID |
 |---|---|---|---|---|---|
@@ -59,6 +59,25 @@ on
 | 3 | Robert Hernandez | robert.hernandez@example.com | Female | 26 | 6 |
 | 4 | David Garcia | david.garcia@example.com | Male | 25 | 8 |
 | 5 | Emma Miller | emma.miller@example.com | Female | 41 | 4 |
+
+#### the geography table : 
+| GeographyID | Country | City |
+|---|---|---|
+| 1 | UK | London |
+| 2 | Germany | Berlin |
+| 3 | France | Paris |
+| 4 | Spain | Madrid |
+| 5 | Italy | Rome |
+
+### output of the query 
+| CustomerID | CustomerName | Email | Gender | Age | Country | City |
+|---|---|---|---|---|---|---|
+| 1 | Emma Anderson | emma.anderson@example.com | Male | 50 | Germany | Berlin |
+| 2 | Sarah Brown | sarah.brown@example.com | Female | 37 | Spain | Madrid |
+| 3 | Robert Hernandez | robert.hernandez@example.com | Female | 26 | Netherlands | Amsterdam |
+| 4 | David Garcia | david.garcia@example.com | Male | 25 | Sweden | Stockholm |
+| 5 | Emma Miller | emma.miller@example.com | Female | 41 | Spain | Madrid |
+
   
   ## How to Use
 
