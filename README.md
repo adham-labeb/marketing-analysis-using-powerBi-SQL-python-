@@ -385,10 +385,13 @@ customer_reviews_df.to_csv('fact_customer_reviews_with_sentiment.csv', index=Fal
 | 5 | 64 | 2 | 7/16/2023 | 3 | Average experience, nothing special. | -0.3089 | Mixed Negative | -0.49 to 0.0 |
 
 # 2-Data Modeling and Analysis:
-1- The cleaned and transformed data is loaded into Power BI.
-2- Relationships between various data tables are established to create a robust data model, enabling cross-table analysis.
+### 1- The cleaned and transformed data is loaded into Power BI.
+###2- Relationships between various data tables are established to create a robust data model, enabling cross-table analysis.
+
+
 ![Data Model Diagram](https://github.com/adham-labeb/marketing-analysis-using-powerBi-SQL-python-/blob/main/data_model.png)
-3- Measures and calculated columns are defined to derive key marketing metrics and KPIs (Key Performance Indicators).
+
+###3- Measures and calculated columns are defined to derive key marketing metrics and KPIs (Key Performance Indicators).
 
   ## How to Use
 
