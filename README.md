@@ -32,9 +32,9 @@ The primary goal of this project is to create a robust and insightful marketing 
 
  # project steps
 
-## 1- data cleaning using SQl
-### 1- the customer and geography table :
-#### the query
+## 1- Data cleaning using SQl
+### 1- The customer and geography table :
+#### The query :
 ```sql
 -- 1- cleaning the customer table and merge it with the geography table ---
 SELECT 
@@ -118,6 +118,8 @@ FROM
 ### 3- customer_reviews table
 #### The query : 
 ```sql
+-- 3- cleaning customer_reviews table ---
+
 SELECT 
            ReviewID , 
 		   CustomerID,
@@ -153,6 +155,8 @@ FROM
 
 #### The query :
 ```sql
+-- 4- cleaning the engagement_data table ---
+
 SELECT  
          EngagementID , 
 		 ContentID , 
@@ -187,6 +191,7 @@ FROM
 ### 5- customer_journey table :
 ### The query : 
 ```sql
+-- 5- cleaning the customer_journey table ---
 WITH DuplicateRecords AS (
     SELECT 
         JourneyID,
@@ -233,6 +238,40 @@ ORDER BY JourneyID
 | 3 | 34 | 8 | 14/06/2024 | PRODUCTPAGE | View | 235 |
 | 4 | 33 | 18 | 28/05/2025 | CHECKOUT | Drop-off | 12 |
 | 5 | 91 | 10 | 11/02/2023 | HOMEPAGE | Click | 156 |
+
+  ## 2- Data cleaning using python :
+  After cleaning the data using SQL, I observed discrepancies in customer names and their corresponding genders (e.g., 'Emma Anderson' listed as 'Male', or 'Robert Hernandez' as 'Female'). To address these inconsistencies, I utilized Python, specifically employing the `gender_guesser library`, to correct the gender entries."
+  #### the python script :
+  ```python
+#-- importing the pandas and gender_guesser libraries --
+import pandas as pd
+import gender_guesser.detector as gender
+
+
+# Read the CSV file into a pandas DataFrame.
+df = pd.read_csv(r'C:\Users\Home\Desktop\NTI-final-project\dim_customers.csv')
+
+# Initialize the gender detector from the gender_guesser library.
+d = gender.Detector()
+
+# Define a function to correct gender based on a customer's name.
+# This function will be applied row-wise to the DataFrame.
+def correct_gender(row: pd.DataFrame):
+
+# Extract the first word of the 'CustomerName' as the primary name for gender detection.
+
+    name = row['CustomerName'].split(' ')[0]
+    
+# Get the current gender value from the DataFrame row
+
+    current_gender = row['Gender']
+    
+# Use the gender detector to guess the gender based on the extracted name.
+
+    guessed_gender = d.get_gender(name)
+```
+  
+  
   ## How to Use
 
 
