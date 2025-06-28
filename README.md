@@ -392,6 +392,12 @@ customer_reviews_df.to_csv('fact_customer_reviews_with_sentiment.csv', index=Fal
 ![Data Model Diagram](https://github.com/adham-labeb/marketing-analysis-using-powerBi-SQL-python-/blob/main/data_model.png)
 
 ### 3- Measures and calculated columns are defined to derive key marketing metrics and KPIs (Key Performance Indicators).
+#### list of different measures : 
+1- **AVG_Rating** : 
+``` dax
+AVG_Rating = AVERAGE(fact_customer_reviews[Rating])
+``` 
+
 
   ## How to Use
 
