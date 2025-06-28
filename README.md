@@ -33,7 +33,8 @@ The primary goal of this project is to create a robust and insightful marketing 
  # project steps
 
 ## 1- data cleaning using SQl
-### 1- the customer and geography table : 
+### 1- the customer and geography table :
+#### the query
 ```sql
 -- 1- cleaning the customer table and merge it with the geography table ---
 SELECT 
@@ -80,12 +81,12 @@ on
 | 5 | Emma Miller | emma.miller@example.com | Female | 41 | Spain | Madrid |
 
 ### 2- the product table
-
+#### the query :
 ```sql
 -- 2- cleaning the product table ---
 SELECT top 5 * FROM products
 
-SELECT top 5
+SELECT 
        ProductID , 
 	   ProductName , 
 	   Price ,
@@ -114,6 +115,42 @@ FROM
 | 3 | Yoga Mat | 485.32 | HIGH |
 | 4 | Dumbbells | 26.21 | LOW |
 | 5 | Soccer Ball | 41.26 | LOW |
+ 
+### 3- customer_reviews table
+#### the query : 
+```sql
+SELECT 
+           ReviewID , 
+		   CustomerID,
+		   ProductID , 
+		   ReviewDate ,
+		   Rating , 
+		   Replace (ReviewText,'  ',' ') AS ReviewText
+FROM       
+           customer_reviews
+```
+
+### table before the query :
+
+| ReviewID | CustomerID | ProductID | ReviewDate | Rating | ReviewText |
+|---|---|---|---|---|---|
+| 1 | 77 | 18 | 2023-12-23 | 3 | Average experience, nothing special. |
+| 2 | 80 | 19 | 2024-12-25 | 5 | The quality is top-notch. |
+| 3 | 50 | 13 | 2025-01-26 | 4 | Five stars for the quick delivery. |
+| 4 | 78 | 15 | 2025-04-21 | 3 | Good quality, but could be cheaper. |
+| 5 | 64 | 2 | 2023-07-16 | 3 | Average experience, nothing special. |
+
+### output of the query :
+
+| ReviewID | CustomerID | ProductID | ReviewDate | Rating | ReviewText |
+|---|---|---|---|---|---|
+| 1 | 77 | 18 | 2023-12-23 | 3 | Average experience, nothing special. |
+| 2 | 80 | 19 | 2024-12-25 | 5 | The quality is top-notch. |
+| 3 | 50 | 13 | 2025-01-26 | 4 | Five stars for the quick delivery. |
+| 4 | 78 | 15 | 2025-04-21 | 3 | Good quality, but could be cheaper. |
+| 5 | 64 | 2 | 2023-07-16 | 3 | Average experience, nothing special. |
+
+
   ## How to Use
 
 
