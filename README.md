@@ -53,7 +53,7 @@ on
          C.GeographyID = G.GeographyID ;
 ```
 ### tables before the query : 
-#### the customer table :
+#### customer table :
 | CustomerID | CustomerName | Email | Gender | Age | GeographyID |
 |---|---|---|---|---|---|
 | 1 | Emma Anderson | emma.anderson@example.com | Male | 50 | 2 |
@@ -62,7 +62,7 @@ on
 | 4 | David Garcia | david.garcia@example.com | Male | 25 | 8 |
 | 5 | Emma Miller | emma.miller@example.com | Female | 41 | 4 |
 
-#### the geography table : 
+#### geography table : 
 | GeographyID | Country | City |
 |---|---|---|
 | 1 | UK | London |
@@ -81,10 +81,9 @@ on
 | 5 | Emma Miller | emma.miller@example.com | Female | 41 | Spain | Madrid |
 
 ### 2- the product table
-#### the query :
+#### The query :
 ```sql
 -- 2- cleaning the product table ---
-SELECT top 5 * FROM products
 
 SELECT 
        ProductID , 
@@ -117,7 +116,7 @@ FROM
 | 5 | Soccer Ball | 41.26 | LOW |
  
 ### 3- customer_reviews table
-#### the query : 
+#### The query : 
 ```sql
 SELECT 
            ReviewID , 
@@ -150,7 +149,90 @@ FROM
 | 4 | 78 | 15 | 2025-04-21 | 3 | Good quality, but could be cheaper. |
 | 5 | 64 | 2 | 2023-07-16 | 3 | Average experience, nothing special. |
 
+### 4- the engagement_data table : 
 
+#### The query :
+```sql
+SELECT  
+         EngagementID , 
+		 ContentID , 
+		 CampaignID , 
+		 ProductID , 
+		 UPPER(REPLACE(ContentType, 'Socialmedia', 'Social Media')) AS ContentType, 
+         LEFT(ViewsClicksCombined, CHARINDEX('-', ViewsClicksCombined) - 1) AS Views,
+         RIGHT(ViewsClicksCombined, LEN(ViewsClicksCombined) - CHARINDEX('-', ViewsClicksCombined)) AS Clicks, 
+		 Likes,
+         FORMAT(CONVERT(DATE, EngagementDate), 'dd/MM/yyyy') AS EngagementDate  
+FROM
+         engagement_data  
+```
+
+### table before the query :
+| EngagementID | ContentID | ContentType | Likes | EngagementDate | CampaignID | ProductID | ViewsClicksCombined |
+|---|---|---|---|---|---|---|---|
+| 1 | 39 | Blog | 190 | 2023-08-30 | 1 | 9 | 1883-671 |
+| 2 | 48 | Blog | 114 | 2023-03-28 | 18 | 20 | 5280-532 |
+| 3 | 16 | video | 32 | 2023-12-08 | 7 | 14 | 1905-204 |
+| 4 | 43 | Video | 17 | 2025-01-21 | 19 | 20 | 2766-257 |
+| 5 | 16 | newsletter | 306 | 2024-02-21 | 6 | 15 | 5116-1524 |
+### output of the query :
+| EngagementID | ContentID | CampaignID | ProductID | ContentType | Views | Clicks | Likes | EngagementDate |
+|---|---|---|---|---|---|---|---|---|
+| 1 | 39 | 1 | 9 | BLOG | 1883 | 671 | 190 | 30/08/2023 |
+| 2 | 48 | 18 | 20 | BLOG | 5280 | 532 | 114 | 28/03/2023 |
+| 3 | 16 | 7 | 14 | VIDEO | 1905 | 204 | 32 | 08/12/2023 |
+| 4 | 43 | 19 | 20 | VIDEO | 2766 | 257 | 17 | 21/01/2025 |
+| 5 | 16 | 6 | 15 | NEWSLETTER | 5116 | 1524 | 306 | 21/02/2024 |
+
+### 5- customer_journey table :
+### The query : 
+```sql
+WITH DuplicateRecords AS (
+    SELECT 
+        JourneyID,
+        CustomerID,
+        ProductID,  
+        format(convert(Date, VisitDate), 'dd/MM/yyyy') as VisitDate,  
+        UPPER(Stage) as Stage,  
+        Action,  
+        round(COALESCE(Duration, AVG(Duration) OVER (PARTITION BY VisitDate)), 2) AS Duration,  
+        ROW_NUMBER() OVER (
+            PARTITION BY CustomerID, ProductID, VisitDate, UPPER(Stage), Action  
+            ORDER BY JourneyID  
+        ) AS row_num
+    FROM 
+        dbo.customer_journey
+)
+    
+SELECT 
+        JourneyID,
+        CustomerID,
+        ProductID,
+        VisitDate,  
+        Stage,  
+        Action,  
+        Duration
+FROM DuplicateRecords
+WHERE row_num = 1  
+ORDER BY JourneyID
+```
+### table before the query :
+| JourneyID | CustomerID | ProductID | VisitDate | Stage | Action | Duration |
+|---|---|---|---|---|---|---|
+| 1 | 64 | 18 | 2024-06-10 | Checkout | Drop-off | NULL |
+| 2 | 94 | 11 | 2025-07-09 | Checkout | Drop-off | NULL |
+| 3 | 34 | 8 | 2024-06-14 | ProductPage | View | 235 |
+| 4 | 33 | 18 | 2025-05-28 | Checkout | Drop-off | NULL |
+| 5 | 91 | 10 | 2023-02-11 | Homepage | Click | 156 |
+### output of the query :
+
+| JourneyID | CustomerID | ProductID | VisitDate | Stage | Action | Duration |
+|---|---|---|---|---|---|---|
+| 1 | 64 | 18 | 10/06/2024 | CHECKOUT | Drop-off | 132.33 |
+| 2 | 94 | 11 | 09/07/2025 | CHECKOUT | Drop-off | 169.25 |
+| 3 | 34 | 8 | 14/06/2024 | PRODUCTPAGE | View | 235 |
+| 4 | 33 | 18 | 28/05/2025 | CHECKOUT | Drop-off | 12 |
+| 5 | 91 | 10 | 11/02/2023 | HOMEPAGE | Click | 156 |
   ## How to Use
 
 
