@@ -439,14 +439,25 @@ number of reviews = DISTINCTCOUNT(fact_customer_reviews[ReviewID])
 ```dax
 Views = SUM ( fact_engagement_data[Views] )
 ```
+# 3- Interactive Dashboard Development (Power BI):
+## 1- Overview Dashboard :
+![overview dashboard](https://github.com/adham-labeb/marketing-analysis-using-powerBi-SQL-python-/blob/main/overview_dashboard.png)
+## 2- Conversion Details﻿ dashboard :
+![Conversion Details﻿](https://github.com/adham-labeb/marketing-analysis-using-powerBi-SQL-python-/blob/main/conversion_details_dashboard.png)
+## 3- Social Media Details dashboard  :
+![Social Media Details](https://github.com/adham-labeb/marketing-analysis-using-powerBi-SQL-python-/blob/main/social_media_details_dashboard.png)
+## 4- Customers Reviews Details dashboard :
+![Customers Reviews Details](https://github.com/adham-labeb/marketing-analysis-using-powerBi-SQL-python-/blob/main/customers_review_details_dashboard.png)
 
   ## How to Use
 
-
-
 1. **Set Up the Database**.
-2. **Run the Queries**: Use the SQL queries in the `lib_managment_sys.sql` file to perform the analysis.
-3. **Explore and Modify**: Customize the queries as needed to explore different aspects of the data or answer additional questions.
+2. **Run the Queries**: Use the SQL queries in the `SQL_Data_Cleaning_queries.sql` file to clean the data .
+3. **Run the python script : use the python script in the `corecting_gender_script.py` to correct the gender
+4. **Run the python script : use the python script in the `customer_review_saintiment_analysis.py` to use the sentiment analysis
+5. **Note :** make sure to change the csv file path in the both python file to the correct path on your pc
+6. Save the output of the SQL cleaning queries and the output of the python script into CSVs files
+7. Upload the cleaned CSVs to the power BI
 
 ## Key Outcomes:
 
