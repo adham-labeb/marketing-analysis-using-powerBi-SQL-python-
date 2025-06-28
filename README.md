@@ -240,7 +240,7 @@ ORDER BY JourneyID
 | 5 | 91 | 10 | 11/02/2023 | HOMEPAGE | Click | 156 |
 
   ## 2- Data cleaning using python :
-  After cleaning the data using SQL, I observed discrepancies in customer names and their corresponding genders (e.g., 'Emma Anderson' listed as 'Male', or 'Robert Hernandez' as 'Female'). To address these inconsistencies, I utilized Python, specifically employing the `gender_guesser library`, to correct the gender entries."
+  After cleaning the data using SQL, I observed discrepancies in customer names and their corresponding genders (e.g., 'Emma Anderson' listed as 'Male', or 'Robert Hernandez' as 'Female'). To address these inconsistencies, I utilized Python, specifically employing the `gender_guesser library`, to correct the gender entries and modify the customer + geography merged table."
   #### the python script :
   ```python
 #-- importing the pandas and gender_guesser libraries --
@@ -270,8 +270,23 @@ def correct_gender(row: pd.DataFrame):
 
     guessed_gender = d.get_gender(name)
 ```
-  
-  
+### Table before the script : 
+| CustomerID | CustomerName | Email | Gender | Age | Country | City |
+|---|---|---|---|---|---|---|
+| 1 | Emma Anderson | emma.anderson@example.com | Male | 50 | Germany | Berlin |
+| 2 | Sarah Brown | sarah.brown@example.com | Female | 37 | Spain | Madrid |
+| 3 | Robert Hernandez | robert.hernandez@example.com | Female | 26 | Netherlands | Amsterdam |
+| 4 | David Garcia | david.garcia@example.com | Male | 25 | Sweden | Stockholm |
+| 5 | Emma Miller | emma.miller@example.com | Female | 41 | Spain | Madrid |
+
+### Table after the script :
+| CustomerID | CustomerName | Email | Gender | Age | Country | City |
+|---|---|---|---|---|---|---|
+| 1 | Emma Anderson | emma.anderson@example.com | Female | 50 | Germany | Berlin |
+| 2 | Sarah Brown | sarah.brown@example.com | Female | 37 | Spain | Madrid |
+| 3 | Robert Hernandez | robert.hernandez@example.com | Male | 26 | Netherlands | Amsterdam |
+| 4 | David Garcia | david.garcia@example.com | Male | 25 | Sweden | Stockholm |
+| 5 | Emma Miller | emma.miller@example.com | Female | 41 | Spain | Madrid |
   ## How to Use
 
 
