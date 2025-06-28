@@ -270,6 +270,27 @@ def correct_gender(row: pd.DataFrame):
 # Use the gender detector to guess the gender based on the extracted name.
 
     guessed_gender = d.get_gender(name)
+    
+
+
+    if guessed_gender in ['male', 'mostly_male']:
+        guessed_gender = 'Male'
+    elif guessed_gender in ['female', 'mostly_female']:
+        guessed_gender = 'Female'
+    else:
+        guessed_gender = None
+
+    if guessed_gender and guessed_gender != current_gender:
+        return guessed_gender
+    return current_gender
+
+# Apply the 'correct_gender' function to each row of the DataFrame.
+
+df['Gender'] = df.apply(correct_gender, axis=1)
+
+# Save the modified DataFrame to a new CSV file.
+
+df.to_csv('dim_customers_updated.csv', index=False)
 ```
 ### Table before the script : 
 | CustomerID | CustomerName | Email | Gender | Age | Country | City |
