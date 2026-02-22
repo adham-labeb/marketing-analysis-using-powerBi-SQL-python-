@@ -410,7 +410,7 @@ customer_reviews_df.to_csv('fact_customer_reviews_with_sentiment.csv', index=Fal
 ### 2- Relationships between various data tables are established to create a robust data model, enabling cross-table analysis.
 
 
-![Data Model Diagram](https://github.com/adham-labeb/marketing-analysis-using-powerBi-SQL-python-/blob/main/data_model.png)
+![Data Model Diagram](https://github.com/adham-labeb/marketing-analysis-using-powerBi-SQL-python-/blob/main/assets/data_model.png)
 
 ### 3- Measures and calculated columns are defined to derive key marketing metrics and KPIs (Key Performance Indicators).
 #### list of different measures : 
@@ -462,13 +462,13 @@ Views = SUM ( fact_engagement_data[Views] )
 ```
 # 3- Interactive Dashboard Development (Power BI):
 ## 1- Overview Dashboard :
-![overview dashboard](https://github.com/adham-labeb/marketing-analysis-using-powerBi-SQL-python-/blob/main/overview_dashboard.png)
+![overview dashboard](https://github.com/adham-labeb/marketing-analysis-using-powerBi-SQL-python-/blob/main/assets/overview_dashboard.png)
 ## 2- Conversion Details﻿ dashboard :
-![Conversion Details﻿](https://github.com/adham-labeb/marketing-analysis-using-powerBi-SQL-python-/blob/main/conversion_details_dashboard.png)
+![Conversion Details﻿](https://github.com/adham-labeb/marketing-analysis-using-powerBi-SQL-python-/blob/main/assets/conversion_details_dashboard.png)
 ## 3- Social Media Details dashboard  :
-![Social Media Details](https://github.com/adham-labeb/marketing-analysis-using-powerBi-SQL-python-/blob/main/social_media_details_dashboard.png)
+![Social Media Details](https://github.com/adham-labeb/marketing-analysis-using-powerBi-SQL-python-/blob/main/assets/social_media_details_dashboard.png)
 ## 4- Customers Reviews Details dashboard :
-![Customers Reviews Details](https://github.com/adham-labeb/marketing-analysis-using-powerBi-SQL-python-/blob/main/customers_review_details_dashboard.png)
+![Customers Reviews Details](https://github.com/adham-labeb/marketing-analysis-using-powerBi-SQL-python-/blob/main/assets/customers_review_details_dashboard.png)
 
   ## How to Use
 
